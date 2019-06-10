@@ -122,9 +122,11 @@ class Ui_HistoryWindow(object):
         self.label_17.setObjectName("label_17")
         self.op_no = QtWidgets.QLineEdit(self.centralwidget)
         self.op_no.setGeometry(QtCore.QRect(1110, 10, 113, 25))
-        self.op_no.setReadOnly(True)
         self.op_no.setObjectName("op_no")
         self.op_no.setText(op_no)
+        self.op_no.setReadOnly(True)
+
+
         self.prevButton = QtWidgets.QPushButton(self.centralwidget)
         self.prevButton.setGeometry(QtCore.QRect(1100, 890, 89, 25))
         self.prevButton.setObjectName("prevButton")

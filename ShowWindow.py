@@ -7,15 +7,16 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import Mediator
+import Mediator, Patient
 from MainWindow import Ui_MainWindow
 
 class Ui_ShowWindow(Ui_MainWindow):
-    def setupUi(self, MainWindow,op_no):
+    def setupUi(self, MainWindow,pat):
         Ui_MainWindow.setupUi(self,MainWindow)
         #print(Mediator.showRecord(op_no))
         self.mainwindow = MainWindow
-        (op_no,name,weight,height,pulse,bp,occu,ph_no,sex,age,place,hos) = Mediator.showRecord(op_no)[0]
+        self.patient = pat
+        (op_no,name,weight,height,pulse,bp,occu,ph_no,sex,age,place,hos) = self.patient.show()
         self.op_no.setReadOnly(True)
         self.op_no.setText(op_no)
 

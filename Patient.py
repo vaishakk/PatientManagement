@@ -1,18 +1,18 @@
 import sqlite3
 class Patient:
-    def addrecord(self,name,op_no,weight,height,pulse,occu,bp,ph_no,sex,age,place,hos):
-        self.name = name
-        self.op_no = op_no
-        self.weight = weight
-        self.height = height
-        self.pulse = pulse
-        self.occu = occu
-        self.bp = bp
-        self.ph_no = ph_no
-        self.sex = sex
-        self.age = age
-        self.place = place
-        self.hos = hos
+    def addrecord(self,params):
+        self.name = params[0]
+        self.op_no = params[1]
+        self.weight = params[2]
+        self.height = params[3]
+        self.pulse = params[4]
+        self.occu = params[5]
+        self.bp = params[6]
+        self.ph_no = params[7]
+        self.sex = params[8]
+        self.age = params[9]
+        self.place = params[10]
+        self.hos = params[11]
 
     def print(self):
         print("Name: "+self.name)
@@ -27,6 +27,9 @@ class Patient:
         print("Age: " + self.age)
         print("Place: " + self.place)
         print("Hospital: " + self.hos)
+
+    def show(self):
+        return (self.op_no, self.name, self.weight, self.height, self.pulse, self.bp, self.occu, self.ph_no, self.sex, self.age, self.place, self.hos)
 
     def saverecord(self):
         connection = sqlite3.connect("DB.db")
@@ -62,9 +65,3 @@ class Patient:
         return (fullarray)
 
 
-    def fetchrecord(self,op_no):
-        connection = sqlite3.connect("DB.db")
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM Patient WHERE OP_Number = {val}".format(val = op_no))
-        result = cursor.fetchall()
-        return result

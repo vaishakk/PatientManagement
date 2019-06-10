@@ -9,13 +9,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 #import MainWindow
 #import ShowWindow
-import Mediator
+import Mediator, Patient
 import SelectList
 
 class Ui_EntryWindow(object):
     def setupUi(self, EntryWindow):
         EntryWindow.setObjectName("EntryWindow")
         EntryWindow.resize(391, 133)
+
         self.centralwidget = QtWidgets.QWidget(EntryWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.loadButton = QtWidgets.QPushButton(self.centralwidget)
@@ -72,7 +73,10 @@ class Ui_EntryWindow(object):
             EntryWindow.hide()
             self.window.show()
         else:
-            Mediator.newWindow(self,"ShowWindow",EntryWindow,args=[self.Opnum.text()])
+            op_no = self.Opnum.text()
+            print(op_no)
+            self.patient = Mediator.fetchrecord(op_no)
+            Mediator.newWindow(self,"ShowWindow",EntryWindow,self.patient)
             '''self.window = QtWidgets.QMainWindow()
             self.ui = ShowWindow.Ui_ShowWindow()
             self.ui.setupUi(self.window,self.Opnum.text())

@@ -13,6 +13,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
+
         self.mainwindow = MainWindow
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -136,7 +137,7 @@ class Ui_MainWindow(object):
 
     def nextWindow(self):
         Mediator.readinputs(self)
-        Mediator.newWindow(self,"CaseWindow",self.mainwindow,self.op_no.text())
+        Mediator.newWindow(self,"CaseWindow",self.mainwindow,[self.op_no.text()])
 
 '''if __name__ == "__main__":
     import sys

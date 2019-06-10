@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 import Patient
 import MainWindow
 import ShowWindow
@@ -6,6 +7,7 @@ import CaseWindow
 import FollowupWindow
 import CaseRecord
 
+patient = Patient.Patient()
 def readinputs(obj):
     name = obj.name.text()
     op_no = obj.op_no.text()
@@ -19,37 +21,46 @@ def readinputs(obj):
     age = obj.age.text()
     place = obj.place.text()
     hos = obj.hos.text()
-    patient = Patient.Patient()
-    patient.addrecord(name, op_no, weight, height, pulse, occu, bp, ph_no, sex, age, place, hos)
+    #patient = Patient.Patient()
+    patient.addrecord([name, op_no, weight, height, pulse, occu, bp, ph_no, sex, age, place, hos])
     patient.print()
     patient.saverecord()
     patient.printall()
 
 def showRecord(op_no):
-    patient = Patient.Patient()
+    #patient = Patient.Patient()
     #patient.printall()
-    return patient.fetchrecord(op_no)
+    return fetchrecord(op_no)
+
+def fetchrecord(op_no):
+    print(op_no)
+    connection = sqlite3.connect("DB.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM Patient WHERE OP_Number = {val}".format(val = op_no))
+    result = cursor.fetchall()
+    patient.addrecord(result[0])
+    return patient
 
 def loadpatientlist():
     patient = Patient.Patient()
     return patient.loadlist()
 
-def newWindow(obj,windowname,curr_window,args=[]):
+def newWindow(obj,windowname,curr_window,pat):
     obj.window = QtWidgets.QMainWindow()
     if windowname == 'MainWindow':
         obj.ui = MainWindow.Ui_MainWindow()
         obj.ui.setupUi(obj.window)
     if windowname == 'ShowWindow':
         obj.ui = ShowWindow.Ui_ShowWindow()
-        obj.ui.setupUi(obj.window, args[0])
+        obj.ui.setupUi(obj.window, pat)
     if windowname == "CaseWindow":
         obj.ui = CaseWindow.Ui_CaseWindow()
         if len(args) == 1:
             args.append("")
-        obj.ui.setupUi(obj.window,args[0],args[1])
+        obj.ui.setupUi(obj.window,pat)
     if windowname == "FollowupWindow":
         obj.ui = FollowupWindow.Ui_HistoryWindow()
-        obj.ui.setupUi(obj.window, args[0],args[1])
+        obj.ui.setupUi(obj.window, pat)
     #print(args[0])
     #obj.ui.setupUi(obj.window,args[0])
     curr_window.hide()

@@ -100,6 +100,7 @@ class Ui_CaseWindow(object):
 
     def nextWindow(self):
         Mediator.newWindow(self,"FollowupWindow",self.mainwindow,args=[self.op_no.text(),self.date.text()])
+        print(self.ac.currentText())
     def prevWindow(self):
         Mediator.newWindow(self,"ShowWindow",self.mainwindow,args=[self.op_no.text()])
 
