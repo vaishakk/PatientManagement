@@ -25,7 +25,8 @@ def readinputs(obj):
     patient.addrecord([name, op_no, weight, height, pulse, occu, bp, ph_no, sex, age, place, hos])
     patient.print()
     patient.saverecord()
-    patient.printall()
+    return patient
+    #patient.printall()
 
 def showRecord(op_no):
     #patient = Patient.Patient()
@@ -45,7 +46,7 @@ def loadpatientlist():
     patient = Patient.Patient()
     return patient.loadlist()
 
-def newWindow(obj,windowname,curr_window,pat):
+def newWindow(obj,windowname,curr_window,pat=None):
     obj.window = QtWidgets.QMainWindow()
     if windowname == 'MainWindow':
         obj.ui = MainWindow.Ui_MainWindow()
@@ -55,8 +56,8 @@ def newWindow(obj,windowname,curr_window,pat):
         obj.ui.setupUi(obj.window, pat)
     if windowname == "CaseWindow":
         obj.ui = CaseWindow.Ui_CaseWindow()
-        if len(args) == 1:
-            args.append("")
+        #if len(args) == 1:
+        #   args.append("")
         obj.ui.setupUi(obj.window,pat)
     if windowname == "FollowupWindow":
         obj.ui = FollowupWindow.Ui_HistoryWindow()
@@ -76,9 +77,10 @@ def readCaseRecord(obj):
     case_no = record.getNewRecordNumber()
     op_no = obj.op_no.text()
     date = obj.date.text()
-    acu_chr = obj.acu_chr
-    dr = obj.dr
-
-    record.createRecord(self, case_no, op_no, date, acu_chr, dr, prov_diag, summary, subjective, objective, appetite, thirst,
-                 sleep,
-                 bowels, urine, sweat, lab, phy_men, events, totality, rubrics, comments, rx)
+    acu_chr = obj.ac.currentText()
+    dr = obj.drincharge.text()
+    prov_diag = obj.provdiag.toPlainText()
+    summary = obj.summary.toPlainText()
+    record.createRecord(case_no, op_no, date, acu_chr, dr, prov_diag, summary)#, subjective, objective, appetite, thirst,
+                 #sleep, bowels, urine, sweat, lab, phy_men, events, totality, rubrics, comments, rx)
+    obj.patient.addCaseRecord(record)

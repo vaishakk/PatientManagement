@@ -136,8 +136,8 @@ class Ui_MainWindow(object):
 
 
     def nextWindow(self):
-        Mediator.readinputs(self)
-        Mediator.newWindow(self,"CaseWindow",self.mainwindow,[self.op_no.text()])
+        pat = Mediator.readinputs(self)
+        Mediator.newWindow(self,"CaseWindow",self.mainwindow,pat)
 
 '''if __name__ == "__main__":
     import sys

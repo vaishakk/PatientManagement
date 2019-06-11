@@ -64,4 +64,6 @@ class Patient:
             fullarray.append(array)
         return (fullarray)
 
+    def addCaseRecord(self,record):
+        self.caserecord = record
 

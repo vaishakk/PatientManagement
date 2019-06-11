@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import Mediator
 
 class Ui_HistoryWindow(object):
-    def setupUi(self, HistoryWindow,op_no,date):
+    def setupUi(self, HistoryWindow,pat):
         HistoryWindow.setObjectName("HistoryWindow")
         HistoryWindow.resize(1280, 960)
         self.mainwindow = HistoryWindow
@@ -24,7 +24,7 @@ class Ui_HistoryWindow(object):
         self.date.setReadOnly(True)
         self.date.setDate(QtCore.QDate(2019, 1, 1))
         self.date.setObjectName("date")
-        self.date.setDate(QtCore.QDate.fromString(date,"dd/MM/yy"))
+        self.date.setDate(QtCore.QDate.fromString(pat.caserecord.date,"dd/MM/yy"))
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(10, 40, 71, 17))
         self.label_2.setObjectName("label_2")
@@ -123,7 +123,7 @@ class Ui_HistoryWindow(object):
         self.op_no = QtWidgets.QLineEdit(self.centralwidget)
         self.op_no.setGeometry(QtCore.QRect(1110, 10, 113, 25))
         self.op_no.setObjectName("op_no")
-        self.op_no.setText(op_no)
+        self.op_no.setText(pat.op_no)
         self.op_no.setReadOnly(True)
 
 

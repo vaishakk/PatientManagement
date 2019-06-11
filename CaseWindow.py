@@ -7,12 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import Mediator
+import Mediator, Patient
 
 class Ui_CaseWindow(object):
-    def setupUi(self, CaseWindow,op_no,date=""):
+    def setupUi(self, CaseWindow,pat):
         CaseWindow.setObjectName("CaseWindow")
         CaseWindow.resize(640, 480)
+        self.patient = pat
         self.mainwindow = CaseWindow
         self.centralwidget = QtWidgets.QWidget(CaseWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -45,9 +46,9 @@ class Ui_CaseWindow(object):
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(30, 220, 101, 17))
         self.label_4.setObjectName("label_4")
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(140, 220, 441, 161))
-        self.textEdit.setObjectName("textEdit")
+        self.summary = QtWidgets.QTextEdit(self.centralwidget)
+        self.summary.setGeometry(QtCore.QRect(140, 220, 441, 161))
+        self.summary.setObjectName("summary")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(30, 20, 31, 17))
         self.label_5.setObjectName("label_5")
@@ -62,7 +63,7 @@ class Ui_CaseWindow(object):
         self.op_no.setGeometry(QtCore.QRect(490, 20, 113, 25))
         self.op_no.setReadOnly(True)
         self.op_no.setObjectName("op_no")
-        self.op_no.setText(op_no)
+        self.op_no.setText(self.patient.op_no)
         self.histButton = QtWidgets.QPushButton(self.centralwidget)
         self.histButton.setGeometry(QtCore.QRect(490, 60, 89, 25))
         self.histButton.setObjectName("histButton")
@@ -80,9 +81,9 @@ class Ui_CaseWindow(object):
 
         self.nextButton.clicked.connect(self.nextWindow)
         self.prevButton.clicked.connect(self.prevWindow)
-        if date != "":
+        '''if date != "":
             self.date.setReadOnly(True)
-            self.date.setDate(QtCore.QDate.fromString(date,"dd/MM/yy"))
+            self.date.setDate(QtCore.QDate.fromString(date,"dd/MM/yy"))'''
     def retranslateUi(self, CaseWindow):
         _translate = QtCore.QCoreApplication.translate
         CaseWindow.setWindowTitle(_translate("CaseWindow", "Case Summary"))
@@ -99,10 +100,11 @@ class Ui_CaseWindow(object):
         self.histButton.setText(_translate("CaseWindow", "History"))
 
     def nextWindow(self):
-        Mediator.newWindow(self,"FollowupWindow",self.mainwindow,args=[self.op_no.text(),self.date.text()])
-        print(self.ac.currentText())
+        Mediator.readCaseRecord(self)
+        Mediator.newWindow(self,"FollowupWindow",self.mainwindow,self.patient)
+
     def prevWindow(self):
-        Mediator.newWindow(self,"ShowWindow",self.mainwindow,args=[self.op_no.text()])
+        Mediator.newWindow(self,"ShowWindow",self.mainwindow,self.patient)
 
 
 

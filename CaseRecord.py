@@ -1,7 +1,7 @@
 import sqlite3
 class CaseRecord:
-    def createRecord(self,case_no,op_no,date,acu_chr,dr,prov_diag,summary,subjective,objective,appetite,thirst,sleep,
-                     bowels,urine,sweat,lab,phy_men,events,totality,rubrics,comments,rx):
+    def createRecord(self,case_no,op_no,date,acu_chr,dr,prov_diag,summary,subjective="",objective="",appetite="",thirst="",
+                     sleep="",bowels="",urine="",sweat="",lab="",phy_men="",events="",totality="",rubrics="",comments="",rx=""):
         self.case_no = case_no
         self.op_no = op_no
         self.date = date
@@ -51,7 +51,7 @@ class CaseRecord:
     def getNewRecordNumber(self):
         connection = sqlite3.connect("DB.db")
         cursor = connection.cursor()
-        cursor.execute("SELECT Case_Number, name FROM CaseRecord")
+        cursor.execute("SELECT Case_Number FROM CaseRecord")
         result = cursor.fetchall()
         return len(result)+1
 
